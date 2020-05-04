@@ -1,0 +1,111 @@
+.index{
+    width: 450px;
+    padding: 20px 20px;
+    border: 1px solid rgb(244,244,244);
+    box-shadow: 0 0 10px rgb(222,222,222);
+    border-radius: 8px;
+    background-color: white;
+}
+
+.index__header{
+    text-align: center;
+    margin: 10px 0 30px;
+}
+
+.index__header > h2, .index__header>span{
+    color: rgb(111,111,111);
+
+}
+
+.index__header>span{
+    padding:0 4px 10px 4px;
+    height: 50px;
+    font-size: 18px;
+}
+
+.index__header__tab{
+    margin: 0 6px;
+    padding:0 4px 10px 4px;
+    box-sizing: border-box;
+    height: 50px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+
+
+.index__header__tab:hover{
+    border-bottom: 3px solid #FA541C;
+    font-weight: 700;
+}
+
+h2.index__header__tab--active{
+    border-bottom: 3px solid #FA541C;
+    color: #FA541C;
+    font-weight: 700;
+}
+
+
+
+
+
+.height100{
+    height: 100%;
+}
+
+.index__footer__button{
+    float: right;
+}
+
+.form-item{
+    width: 82%;
+    position: relative;
+}
+
+.form-item__input{
+    appearance: none;
+    outline: none;
+    border: 1px solid lightgray;
+    transition: 0.3s;
+}
+
+.form-item__input:focus{
+    border: 1px solid cornflowerblue;
+}
+
+.username,.middle,.password{
+    padding: 8px 0 8px 36px;
+    font-size: 16px;
+    width: 100%;
+    background-color: rgb(250,250,250);
+}
+
+.username{
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+
+.password{
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.input-icon{
+    position: absolute;
+    left: 9px;
+    font-size: 18px;
+}
+
+.index__logo{
+    position: absolute;
+    left: 35px;
+    top: 35px;
+    font-size: 26px;
+    color: #FA541C;
+    font-family: Monaco;
+    text-shadow: 0 0 12px rgba(250, 84, 28, 0.32);
+    font-weight: 500;
+}
+
+

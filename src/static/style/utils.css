@@ -1,0 +1,57 @@
+.mt25{
+    margin-top: 25px
+}
+
+.mt20{
+    margin-top: 20px
+}
+
+.mt10{
+    margin-top: 10px
+}
+.mt15{
+    margin-top: 15px
+}
+
+.mt5{
+    margin-top: 5px
+}
+
+.fxal{
+    display: flex;
+    align-items: center;
+}
+
+.fxnw{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.fxct{
+    justify-content: center;
+}
+
+.fxbt{
+    justify-content: space-between;
+}
+
+.standard-block-button{
+    border-radius: 6px;
+}
+
+.button-color-success {
+    background-color: #52C41A;
+    border-color: #52C41A;
+}
+
+.button-color-success:hover,.button-color-success:focus {
+    background-color: #52C41A;
+    border-color: #73d13d;
+}
+
+.button-color-success:hover,.button-color-success:focus {
+    background-color: #389e0d;
+    border-color: #389e0d;
+}
+
+
