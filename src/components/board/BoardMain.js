@@ -1,37 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Table } from "antd";
+import hljs from 'highlight.js'
+import BoardDocument from "./BoardDocument";
+import BoardDebug from "./BoardDebug";
 
-function BoardDocument(props) {
-    return(
-        <>
-            <div className={'board-document__header'}>
-                <h2>{props.currentApiInfo.title}</h2>
-            </div>
-            <div className={'board-document__body'}>
-                <h4>
-                    <span className={'board-document__body--title'}>请求地址</span><span className={'board-document__body__method'}>{props.currentApiInfo.method}</span>
-                    <span className={'board-document__body__url'}>{props.currentApiInfo.url}</span>
-                </h4>
-                <h4>
-                    <span className={'board-document__body--title'}>描述</span>
-                    { props.currentApiInfo.description }
-                </h4>
-            </div>
-        </>
-    )
-}
-
-function BoardDebug() {
-    return(
-        <h1></h1>
-    )
-}
 
 // 主区域，主部分
-export default class BoardMain extends React.Component{
+export default class BoardMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentApiInfo:{
+            currentApiInfo: {
                 title: '获取用户信息',
                 url: 'https://api.yezhikang.com/user',
                 method: 'GET',
@@ -40,6 +19,8 @@ export default class BoardMain extends React.Component{
                     {
                         name: 'id',
                         description: '用户 id',
+                        requestType: 'query',
+                        isNecessary: 'true',
                         type: 'int',
                         schema: ''
                     }
@@ -47,22 +28,22 @@ export default class BoardMain extends React.Component{
                 responseStatus: [
                     {
                         statusCode: 200,
-                        description: '',
+                        description: '响应成功',
                         schema: ''
                     },
                     {
                         statusCode: 300,
-                        description: '',
+                        description: '用户跳转',
                         schema: ''
                     },
                     {
                         statusCode: 400,
-                        description: '',
+                        description: '客户端请求错误',
                         schema: ''
                     },
                     {
                         statusCode: 500,
-                        description: '',
+                        description: '服务器错误',
                         schema: ''
                     },
                 ],
@@ -86,22 +67,18 @@ export default class BoardMain extends React.Component{
                         schema: ''
                     }
                 ],
-                responseExample: {
-                    status: 200,
-                    data: {
-                        userId: 1,
-                        name: '叶志康'
-                    }
-                }
+                responseExample: "{\n \tdata: 'sss',\n \tname: '333', \n \ttime:'2000-01-30' \n}"
             }
         }
     }
 
     render() {
         return (
-            <div className={'board-body'}>
+            <div className={ 'board-body' }>
                 {
-                    this.props.currentIndex === 0 ? <BoardDocument currentApiInfo={this.state.currentApiInfo}/> : <BoardDebug/>
+                    this.props.currentIndex === 0 ?
+                        <BoardDocument currentApiInfo={ this.state.currentApiInfo }/> :
+                        <BoardDebug currentApiInfo={ this.state.currentApiInfo }/>
                 }
             </div>
         );

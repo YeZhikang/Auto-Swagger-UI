@@ -7,6 +7,9 @@
     background-color: rgb(240,240,240);
     width: 100%;
     box-shadow: 0 0 10px rgba(200,200,200,1);
+    position: fixed;
+    top: 0;
+    z-index: 9999;
 }
 
 .ant-tabs .ant-tabs-tab{
@@ -84,8 +87,10 @@
 }
 
 .board-body{
-    padding: 0 12px;
+    padding: 0 24px 40px;
+
     flex-grow: 1;
+
 }
 
 .board-document__header{
@@ -106,6 +111,25 @@
     display: inline-block;
 }
 
+.board-debug__body__method{
+    padding: 4px 6px;
+    background-color: #c12127;
+    color: white;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    display: inline-block;
+}
+
+.board-debug__body__method--right{
+    padding: 4px 6px;
+    background-color: #fe8f2b;
+    color: white;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    display: inline-block;
+    cursor: pointer;
+}
+
 .board-document__body__url{
     padding: 2px 9px;
     border-top-right-radius: 3px;
@@ -115,7 +139,7 @@
 }
 
 .board-document__body--title{
-    width: 70px;
+    min-width: 70px;
     margin-right: 30px;
 
     /*overflow: hidden;*/
@@ -125,4 +149,49 @@
     padding: 1px 4px 1px 5px;
     border-radius: 3px;
     background-color: rgba(243, 243, 243, 0.88);
+}
+
+.param-title{
+    color: #FA541C;
+    font-weight: 600;
+}
+
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td, .ant-table tfoot > tr > th, .ant-table tfoot > tr > td{
+    padding: 8px;
+}
+
+.information--unit{
+    margin-bottom: 16px;
+}
+
+td:empty::before{
+    content: '无数据';
+    color: darkgrey;
+}
+
+.container{
+    margin-top: 64px;
+}
+
+.example-code{
+    padding: 10px 16px;
+    border-radius: 6px;
+}
+
+.board-debug__body__method--input{
+    width: 600px;
+    outline: none;
+    /*border-bottom-right-radius: 5px;*/
+    /*border-top-right-radius: 5px;*/
+    border: 1px solid lightgray;
+    padding-left: 8px;
+    line-height: 26px;
+    border-left: none;
+    transition: 0.2s;
+}
+
+.board-debug__body__method--input:focus{
+    border: 1px solid lightcoral;
+    border-left: none;
+    border-right: none;
 }

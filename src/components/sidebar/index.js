@@ -10,7 +10,8 @@ function Sidebar(props) {
 
     function handleClick({ item, key, keyPath, domEvent }) {
         // item.props.children
-        props.history.push(`/index/${props.currentProject}/${item.props.children}`)
+        console.log(item)
+        props.history.push(`/index/${props.currentProject}/${item.props.children[1]}`)
     }
 
     return (

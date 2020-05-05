@@ -7,6 +7,7 @@ const { TabPane } = Tabs
 
 
 // 主页面区域，标签栏
+// 通过 changeCurrent 事件来更新当前标签（是调试还是文档）
 function BoardTab(props) {
     const [historyTab, setHistoryTab] = useState([])
     const match = useRouteMatch()
@@ -28,7 +29,6 @@ function BoardTab(props) {
             { match.params.api !== '首页' ?
                 <>
                     <SingleTabs changeCurrent={ changeCurrent }/>
-
                 </> : '' }
             { props.children }
         </div>
@@ -36,7 +36,6 @@ function BoardTab(props) {
 }
 
 function SingleTabs(props) {
-
     function changeCurrent(val) {
         const singleTabs = document.querySelectorAll('.single-tabs__tab')
         singleTabs[val].classList.add('single-tabs__tab--active')
@@ -44,11 +43,12 @@ function SingleTabs(props) {
         props.changeCurrent(val)
     }
 
+
     return (
         <div className={ 'single-tabs' }>
             <div
                 onClick={ () => changeCurrent(0) }
-                className={ 'single-tabs__tab' }
+                className={ 'single-tabs__tab single-tabs__tab--active' }
             >
                 <CopyOutlined/> 文档
             </div>

@@ -25,6 +25,7 @@ function Nav(props) {
             </Select>
 
             <div className={ 'fxal ' }>
+                <Button  type={'link'} style={{marginRight: '20px'}}>添加新接口</Button>
                 <Input
                     placeholder={ '请输入搜索内容' }
                     prefix={ <SearchOutlined/> }
