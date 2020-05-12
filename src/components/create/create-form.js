@@ -46,6 +46,12 @@ export default function CreateForm() {
                     <Input placeholder={ 'eg: https://api.baidu.com' }/>
                 </Form.Item>
                 <Form.Item
+                    label={ '描述' }
+                    name={ 'description' }
+                >
+                    <Input/>
+                </Form.Item>
+                <Form.Item
                     label={ '您的身份' }
                     name={ 'identify' }
                 >

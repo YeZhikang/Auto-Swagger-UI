@@ -170,7 +170,7 @@ td:empty::before{
 }
 
 .container{
-    margin-top: 64px;
+    padding-top: 64px;
 }
 
 .example-code{

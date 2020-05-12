@@ -3,6 +3,7 @@ import SideBar from '../components/sidebar'
 import { Link, withRouter, useRouteMatch, useParams } from "react-router-dom";
 import Nav from "../components/nav";
 import '../static/style/index.css'
+import Store from '../store'
 
 class Index extends React.Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class Index extends React.Component {
             currentProject: '',
             parentNodes: [],
             projectInfo: {},
+            allProject: []
         }
     }
 
@@ -32,23 +34,41 @@ class Index extends React.Component {
 
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // Store.dispatch({type: 'SETAPIPROJECT', value: {  }})
+        const { api } = this.props.match.params
+        if(api !== Store.getState().projectInfoReducer.api){
+            this.handleChangeProjectAndApi(this.state.allProject)
+            console.log(Store.getState())
+        }
+        // this.handleChangeProjectAndApi(this.state.allProject)
+        // console.log(Store.getState())
+    }
+
     async componentDidMount() {
         const { data } = await this.$server.get('/api/project/get-project')
+        this.handleChangeProjectAndApi(data)
+        // this.props.history.push(`/index/${ this.state.currentProject }/首页`)
+    }
+
+    handleChangeProjectAndApi(projectArr){
         const { api, projectName } = this.props.match.params
+        const projectInfo = projectArr.filter(item => item.projectName === projectName)
 
-        const projectInfo = data.filter(item => item.projectName === projectName)
-
-        if (projectInfo.length < 1) {
+        if(!projectInfo.length) {
             this.props.history.push('/notfound')
-        } else {
+        }else{
             this.setState({
-                projectList: data.map(item => item.projectName),
+                projectList: projectArr.map(item => item.projectName),
                 currentProject: projectName,
                 parentNodes: [{ title: '首页', id: 1 }, ...projectInfo[0].parentNodes],
-                projectInfo: projectInfo[0]
+                projectInfo: projectInfo[0],
+                allProject: projectArr
             })
+            Store.dispatch({ type: 'PROJECTSET',value: projectInfo[0] })
+            Store.dispatch( { type: 'SETAPIPROJECT', value: {api, projectName} })
+            console.log(Store.getState())
         }
-        // this.props.history.push(`/index/${ this.state.currentProject }/首页`)
     }
 
     render() {

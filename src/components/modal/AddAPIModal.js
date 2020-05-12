@@ -123,8 +123,8 @@ export default class APIModal extends React.Component {
         }
     }
 
-    onFinish = values => {
-        console.log('Success:', values);
+    onFinish = async (values) => {
+        const res = await this.$server.post('/api/project/addAPI',values)
     };
 
     render() {

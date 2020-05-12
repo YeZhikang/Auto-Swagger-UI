@@ -18,8 +18,6 @@ function BoardTab(props) {
     }
 
     useEffect(() => {
-        console.log(match.params.projectName)
-        console.log(currentProject)
         if((currentProject !== match.params.projectName)){
             if(currentProject !== ''){
                 setHistoryTab(['首页'])

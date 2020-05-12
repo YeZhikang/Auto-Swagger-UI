@@ -3,7 +3,8 @@ import {Tabs} from 'antd'
 import BoardTab from "./BoardTab";
 import {Link, useRouteMatch,withRouter} from "react-router-dom";
 import BoardMain from "./BoardMain";
-
+import Store from '../../store'
+import FirstPage from "./FirstProject";
 const {TabPane} = Tabs
 
 
@@ -37,7 +38,11 @@ export default withRouter(function Board(props) {
                 }
             </Tabs>
             <BoardTab changeCurrent={changeCurrent} tabChange={(tabs) => handleTabChange(tabs)}>
-                <BoardMain currentIndex={subCurrentIndex} />
+                {
+                    route.params.api === '首页'
+                    ? <FirstPage/>
+                    : <BoardMain currentIndex={subCurrentIndex} />
+                }
             </BoardTab>
         </div>
     )

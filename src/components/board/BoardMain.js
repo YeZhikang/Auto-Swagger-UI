@@ -3,13 +3,35 @@ import { Table } from "antd";
 import hljs from 'highlight.js'
 import BoardDocument from "./BoardDocument";
 import BoardDebug from "./BoardDebug";
-
+import Store from '../../store'
 
 // 主区域，主部分
 export default class BoardMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            responseStatus: [
+                {
+                    statusCode: 200,
+                    description: '响应成功',
+                    schema: ''
+                },
+                {
+                    statusCode: 300,
+                    description: '用户跳转',
+                    schema: ''
+                },
+                {
+                    statusCode: 400,
+                    description: '客户端请求错误',
+                    schema: ''
+                },
+                {
+                    statusCode: 500,
+                    description: '服务器错误',
+                    schema: ''
+                },
+            ],
             currentApiInfo: {
                 title: '获取用户信息',
                 url: 'https://api.yezhikang.com/user',
@@ -24,28 +46,6 @@ export default class BoardMain extends React.Component {
                         type: 'int',
                         schema: ''
                     }
-                ],
-                responseStatus: [
-                    {
-                        statusCode: 200,
-                        description: '响应成功',
-                        schema: ''
-                    },
-                    {
-                        statusCode: 300,
-                        description: '用户跳转',
-                        schema: ''
-                    },
-                    {
-                        statusCode: 400,
-                        description: '客户端请求错误',
-                        schema: ''
-                    },
-                    {
-                        statusCode: 500,
-                        description: '服务器错误',
-                        schema: ''
-                    },
                 ],
                 responseData: [
                     {
@@ -67,18 +67,56 @@ export default class BoardMain extends React.Component {
                         schema: ''
                     }
                 ],
-                responseExample: "{\n \tdata: 'sss',\n \tname: '333', \n \ttime:'2000-01-30' \n}"
+                responseExample: "{\n \tdata: 'sss',\n \tname: '333', \n \ttime:'2000-01-30' \n}",
+                currentApi: null
+            }
+        }
+        Store.subscribe(() => {
+            const project = Store.getState().projectReducer
+            const apiTitle = Store.getState().projectInfoReducer.api;
+            console.log(this.state.currentApi, apiTitle)
+            if (this.state.currentApi !== apiTitle) {
+                this.setState({
+                    currentApi: apiTitle,
+                })
+                this.getApiInfo(project, apiTitle)
+            }
+        })
+    }
+
+    getApiInfo(project, apiTitle) {
+        if (!project.parentNodes) {
+            return
+        }
+        for (let parentNode of project.parentNodes) {
+            for (let api of parentNode.items) {
+                if (api.title === apiTitle) {
+                    this.setState({
+                        currentApiInfo: api
+                    })
+                }
             }
         }
     }
 
     render() {
+
         return (
             <div className={ 'board-body' }>
                 {
                     this.props.currentIndex === 0 ?
-                        <BoardDocument currentApiInfo={ this.state.currentApiInfo }/> :
-                        <BoardDebug currentApiInfo={ this.state.currentApiInfo }/>
+                        <BoardDocument
+                            currentApiInfo={ {
+                                ...this.state.currentApiInfo,
+                                responseStatus: this.state.responseStatus
+                            } }
+                        /> :
+                        <BoardDebug
+                            currentApiInfo={ {
+                                ...this.state.currentApiInfo,
+                                responseStatus: this.state.responseStatus
+                            } }
+                        />
                 }
             </div>
         );

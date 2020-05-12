@@ -24,6 +24,7 @@ export default function BoardDocument(props) {
             title: '是否必须',
             dataIndex: 'isNecessary',
             key: 'isNecessary',
+            render: (text) => <span>{ text.toString() }</span>
         },
         {
             title: '类型',
@@ -89,7 +90,9 @@ export default function BoardDocument(props) {
     // }
 
     useEffect(() => {
-        hljs.highlightBlock(document.querySelector('.example-code'))
+        if(props.currentApiInfo.responseExample){
+            hljs.highlightBlock(document.querySelector('.example-code'))
+        }
     })
 
 
@@ -147,9 +150,13 @@ export default function BoardDocument(props) {
                     <h4>
                         <span className={ 'board-document__body--title' }>返回示例</span>
                     </h4>
-                    <pre className={ 'example-code' }>
-                        { props.currentApiInfo.responseExample }
-                    </pre>
+                    {
+                        props.currentApiInfo.responseExample ?
+                        <pre className={ 'example-code' }>
+                            { props.currentApiInfo.responseExample }
+                        </pre>
+                            : <div className={'mt15'}>暂无数据</div>
+                    }
                 </div>
             </div>
         </>

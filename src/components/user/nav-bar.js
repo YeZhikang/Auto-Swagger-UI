@@ -10,7 +10,7 @@ class UserBar extends React.Component{
         }
 
         Store.subscribe(() => {
-            const {name, phone} = Store.getState()
+            const {name, phone} = Store.getState().userReducer
             this.setState({
                 phone,
                 name
@@ -19,7 +19,7 @@ class UserBar extends React.Component{
     }
 
     componentDidMount() {
-        this.setState(Store.getState())
+        this.setState(Store.getState().userReducer)
     }
 
     render() {
