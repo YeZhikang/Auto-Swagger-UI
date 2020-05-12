@@ -83,3 +83,14 @@ $app-light-color: #f6f7f8;
 // 应用宽度
 $app-width: 1440px;
 
+$app-guide-color:   #FA541C;
+
+
+@mixin hover-button{
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover{
+    color: #00b2f8;
+  }
+}

@@ -1,8 +1,8 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import React from "react";
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-
+import Store from '../../store/index'
 // const layout = {
 //     labelCol: {
 //         span: 6,
@@ -19,20 +19,33 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 // };
 
 function LoginForm(props) {
+    async function handleLogin() {
+        const form = document.querySelector('.login-form')
+        const name = form['name'].value
+        const password = form['password'].value
+
+        const res = await window.server.post('/api/user/login', {name,password})
+        if(res.token){
+            localStorage.setItem('token', res.token)
+            Store.dispatch({ type: 'SET', value:{name, password} })
+            props.history.push('/user')
+        }
+    }
     return (
         <div className={ 'fxal fxct fxnw' }>
             <form
                 style={ {
                     width: '100%'
                 } }
-                className={ 'fxal fxct fxnw' }
+                className={ 'fxal fxct fxnw login-form' }
             >
                 <div className={ 'form-item fxal fxct' }>
                     <UserOutlined className={ 'input-icon' }/>
                     <input
                         className={ 'username form-item__input' }
                         type="text"
-                        placeholder={ '手机号或邮箱' }
+                        name={'name'}
+                        placeholder={ '手机号或昵称' }
                     />
                 </div>
                 <div className={ 'form-item fxal fxct' }>
@@ -40,6 +53,7 @@ function LoginForm(props) {
                     <input
                         className={ 'password form-item__input' }
                         type="password"
+                        name={'password'}
                         placeholder={ '密码' }
                     />
                 </div>
@@ -54,6 +68,7 @@ function LoginForm(props) {
                         type={ "primary" }
                         className={ 'standard-block-button' }
                         block
+                        onClick={handleLogin}
                     >登陆</Button>
                 </div>
             </form>
@@ -61,4 +76,4 @@ function LoginForm(props) {
     )
 }
 
-export default LoginForm
+export default withRouter(LoginForm)

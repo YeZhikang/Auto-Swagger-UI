@@ -7,7 +7,6 @@ function IndexCard(props) {
     let match = useRouteMatch();
 
     function turnTo() {
-
         if(cate === '注册') props.history.push(`/sign`)
         else props.history.push(`/sign/register`)
     }

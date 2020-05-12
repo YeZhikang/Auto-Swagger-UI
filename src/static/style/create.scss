@@ -1,0 +1,32 @@
+@import "variables";
+.create-board{
+  height: 100%;
+  padding-top: 64px;
+  justify-content: center;
+  position: relative;
+}
+
+.create-board__back{
+  font-size: 24px;
+  color: darkgray;
+  position: absolute;
+  left: 20px;
+  top: 84px;
+  @include hover-button
+}
+
+
+.create-index{
+  height: 100%;
+  min-width: 1200px;
+}
+
+.create-board__card{
+  width: 550px;
+  padding: 60px;
+  box-shadow: 0 0 10px lightgray ;
+}
+
+.ant-message{
+  z-index: 999999;
+}

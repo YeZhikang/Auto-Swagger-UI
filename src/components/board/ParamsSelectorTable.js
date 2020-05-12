@@ -22,7 +22,6 @@ export default function ParamsSelectorTable(props) {
         }
     ]
     const rowSelection = {
-
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },

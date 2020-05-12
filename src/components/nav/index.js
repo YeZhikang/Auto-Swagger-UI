@@ -3,20 +3,35 @@ import { Link } from "react-router-dom";
 import { Button, Select, } from 'antd'
 import Input from "antd/lib/input";
 import { SearchOutlined } from '@ant-design/icons';
+import APIModal from "../modal/AddAPIModal";
 
 const { Option } = Select
 
 function Nav(props) {
+    const [visible, setVisible] = useState(false)
+
     function handleChangeCurrent(value) {
         props.changeCurrent(value)
     }
 
+    function handleOpenDialog() {
+        setVisible(true)
+    }
+
+    function handleCancelDialog() {
+        setVisible(false)
+    }
+
+    function handleOkDialog() {
+        setVisible(false)
+    }
+    console.log(props.parentNodes)
+
     return (
         <div className={ 'nav fxal fxbt' }>
-
             <Select
                 onChange={ handleChangeCurrent }
-                defaultValue={ props.projectList.length > 0 ? props.projectList[0] : '' }
+                value={ props.currentProject }
                 style={ { width: 229 } }
             >
                 {
@@ -25,7 +40,11 @@ function Nav(props) {
             </Select>
 
             <div className={ 'fxal ' }>
-                <Button  type={'link'} style={{marginRight: '20px'}}>添加新接口</Button>
+                <Button
+                    onClick={ handleOpenDialog }
+                    type={ 'link' }
+                    style={ { marginRight: '20px' } }
+                >添加新接口</Button>
                 <Input
                     placeholder={ '请输入搜索内容' }
                     prefix={ <SearchOutlined/> }
@@ -33,6 +52,14 @@ function Nav(props) {
                 />
                 <div className={ 'nav__logo' }>Auto Swagger</div>
             </div>
+            <APIModal
+                handleAddAPI={ handleOkDialog }
+                handleCancel={ handleCancelDialog }
+                apiMenu={ props.parentNodes }
+                projectList={ props.projectList }
+                visible={ visible }
+                projectInfo = {props.projectInfo}
+            />
         </div>
     )
 }

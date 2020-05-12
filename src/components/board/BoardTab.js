@@ -9,15 +9,29 @@ const { TabPane } = Tabs
 // 主页面区域，标签栏
 // 通过 changeCurrent 事件来更新当前标签（是调试还是文档）
 function BoardTab(props) {
-    const [historyTab, setHistoryTab] = useState([])
+    const [historyTab, setHistoryTab] = useState(['首页'])
     const match = useRouteMatch()
+    const [currentProject, setCurrentProject] = useState('')
 
     if (!historyTab.includes(match.params.api)) {
         setHistoryTab([...historyTab, match.params.api])
     }
 
     useEffect(() => {
-        props.tabChange(historyTab)
+        console.log(match.params.projectName)
+        console.log(currentProject)
+        if((currentProject !== match.params.projectName)){
+            if(currentProject !== ''){
+                setHistoryTab(['首页'])
+                setCurrentProject(match.params.projectName)
+                props.tabChange(['首页'])
+            }else{
+                setCurrentProject(match.params.projectName)
+                props.tabChange(historyTab)
+            }
+        }else{
+            props.tabChange(historyTab)
+        }
     }, [match])
 
     function changeCurrent(index) {

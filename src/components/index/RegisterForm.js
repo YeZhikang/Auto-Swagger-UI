@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { UserOutlined, LockOutlined, PhoneOutlined } from '@ant-design/icons'
 
-
 const layout = {
     labelCol: {
         span: 6,
@@ -28,11 +27,15 @@ function RegisterForm(props) {
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const registerForm = document.querySelector('.form')
-        console.log(registerForm['phoneNumber'].value)
-    }
+        const name = registerForm['userName'].value
+        const phone = registerForm['phoneNumber'].value
+        const password = registerForm['password'].value
 
+        const response = await window.server.post('/api/user/register', {name,phone,password})
+        console.log(response)
+    }
 
     return (
         <div>

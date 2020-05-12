@@ -1,6 +1,6 @@
 import React from "react";
 import SideBar from '../components/sidebar'
-import { Link,withRouter } from "react-router-dom";
+import { Link, withRouter, useRouteMatch, useParams } from "react-router-dom";
 import Nav from "../components/nav";
 import '../static/style/index.css'
 
@@ -9,25 +9,10 @@ class Index extends React.Component {
         super(props);
         this.handleClick.bind(this)
         this.state = {
-            projectList: ['isc-platform-ui', 'isc-config-ui'],
-            currentProject: 'isc-platform-ui',
-            parentNodes:[{
-                id: 1,
-                title: '首页',
-            },{
-                id: 2,
-                title: '资产类',
-                items: [{
-                    id: '2-1',
-                    title: '增加资产类',
-                },{
-                    id: '2-2',
-                    title: '删除资产类',
-                },{
-                    id: '2-3',
-                    title: '修改资产类',
-                }]
-            }]
+            projectList: [],
+            currentProject: '',
+            parentNodes: [],
+            projectInfo: {},
         }
     }
 
@@ -35,29 +20,55 @@ class Index extends React.Component {
         this.props.history.push('/')
     }
 
-    handleChangeCurrent(value){
+    handleChangeCurrent(value) {
         this.setState({
             currentProject: value
         })
         this.props.history.push(`/index/${ value }/首页`)
     }
 
-    componentDidMount() {
-        this.props.history.push(`/index/${ this.state.currentProject }/首页`)
+    // 获取所有API及信息
+    getAllProjectAPIs() {
+
+    }
+
+    async componentDidMount() {
+        const { data } = await this.$server.get('/api/project/get-project')
+        const { api, projectName } = this.props.match.params
+
+        const projectInfo = data.filter(item => item.projectName === projectName)
+
+        if (projectInfo.length < 1) {
+            this.props.history.push('/notfound')
+        } else {
+            this.setState({
+                projectList: data.map(item => item.projectName),
+                currentProject: projectName,
+                parentNodes: [{ title: '首页', id: 1 }, ...projectInfo[0].parentNodes],
+                projectInfo: projectInfo[0]
+            })
+        }
+        // this.props.history.push(`/index/${ this.state.currentProject }/首页`)
     }
 
     render() {
         return (
             <div>
-                <Nav projectList={ this.state.projectList } changeCurrent={(value) => this.handleChangeCurrent(value)}/>
-                <div className={'container'}>
-                    <SideBar parentNodes={this.state.parentNodes} currentProject={ this.state.currentProject }/>
-                    <div className={'container__board'}>
-                        {this.props.children}
+                <Nav
+                    { ...this.state }
+                    changeCurrent={ (value) => this.handleChangeCurrent(value) }
+                />
+                <div className={ 'container' }>
+                    <SideBar
+                        { ...this.state }
+                    />
+                    <div className={ 'container__board' }>
+                        { this.props.children }
                     </div>
                 </div>
             </div>
         );
     }
 }
+
 export default withRouter(Index)
