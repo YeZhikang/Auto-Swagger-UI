@@ -1,19 +1,21 @@
 import React from 'react'
-import { Form, Button, Select, Input, Radio, message } from "antd";
+import { Form, Button, Select, Input, Radio, message, } from "antd";
 import Store from '../../store'
 
 const layout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 18 },
+    labelCol: { span: 4 },
+    wrapperCol: { span: 20 },
 };
 const tailLayout = {
-    wrapperCol: { offset: 6, span: 18 },
+    wrapperCol: { offset: 4, span: 20 },
 };
+
+const { Textarea } = Input
 
 export default function CreateForm() {
     async function onFinish(values) {
         const { name, phone } = Store.getState()
-
+        console.log(values)
         const res = await window.server.post('/api/project/create-project', { phone, name, ...values })
         if (res) {
             console.log('yes')
@@ -32,6 +34,7 @@ export default function CreateForm() {
                 name="createForm"
                 onFinish={ onFinish }
                 onFinishFailed={ onFinishFailed }
+                { ...layout }
             >
                 <Form.Item
                     label={ '项目名称' }
@@ -49,7 +52,7 @@ export default function CreateForm() {
                     label={ '描述' }
                     name={ 'description' }
                 >
-                    <Input/>
+                    <Input.TextArea/>
                 </Form.Item>
                 <Form.Item
                     label={ '您的身份' }
@@ -61,13 +64,13 @@ export default function CreateForm() {
                         <Radio value={ 'allStackOrTest' }>全栈/测试</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item label={ '' }>
-                    <Button
-                        htmlType="submit"
-                        block
-                        type={ 'primary' }
-                    >创建</Button>
-                </Form.Item>
+
+                <Button
+                    htmlType="submit"
+                    block
+                    type={ 'primary' }
+                >创建</Button>
+
             </Form>
         </div>
     )

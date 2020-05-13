@@ -24,7 +24,7 @@ export default function BoardDocument(props) {
             title: '是否必须',
             dataIndex: 'isNecessary',
             key: 'isNecessary',
-            render: (text) => <span>{ text.toString() }</span>
+            render: (text) => text ? <h4 className={'param-title'} style={{ 'color': '#ffba00' }}>{ text.toString() } </h4> : <span>{ text.toString() }</span>
         },
         {
             title: '类型',

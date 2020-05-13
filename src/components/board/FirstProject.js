@@ -71,7 +71,13 @@ export default class FirstPage extends React.Component {
                         }
                         <h4>
                             <span className={ 'board-document__body--title' }>简介</span>
-                            <span className={ 'board-document__body__url' }>Auto-Swagger-UI,一个自动化接口文档与生成器</span>
+                            <span className={ 'board-document__body__url' }>{ this.state.description }</span>
+                        </h4>
+                    </div>
+                    <div className="information--unit">
+                        <h4>
+                            <span className={ 'board-document__body--title' }>作者</span>
+                            <span className={ 'board-document__body__url' }>{ this.state.author }</span>
                         </h4>
                     </div>
                     <div className="information--unit">

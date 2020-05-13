@@ -3,6 +3,7 @@ import { Link,withRouter } from "react-router-dom";
 import React from "react";
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import Store from '../../store/index'
+
 // const layout = {
 //     labelCol: {
 //         span: 6,

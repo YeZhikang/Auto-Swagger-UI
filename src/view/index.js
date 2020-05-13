@@ -22,11 +22,13 @@ class Index extends React.Component {
         this.props.history.push('/')
     }
 
-    handleChangeCurrent(value) {
-        this.setState({
-            currentProject: value
-        })
-        this.props.history.push(`/index/${ value }/首页`)
+    async handleChangeCurrent(value) {
+        // this.setState({
+        //     currentProject: value
+        // })
+        console.log('yes')
+        await this.props.history.push(`/index/${ value }/首页`)
+        this.handleChangeProjectAndApi(this.state.allProject, value)
     }
 
     // 获取所有API及信息
@@ -51,8 +53,15 @@ class Index extends React.Component {
         // this.props.history.push(`/index/${ this.state.currentProject }/首页`)
     }
 
-    handleChangeProjectAndApi(projectArr){
-        const { api, projectName } = this.props.match.params
+    handleChangeProjectAndApi(projectArr, current=''){
+        let api,projectName;
+        // if(current){
+        //     [api, projectName] = [ '首页', current ]
+        // }else{
+            api = this.props.match.params.api;
+            projectName = this.props.match.params.projectName
+        // }
+
         const projectInfo = projectArr.filter(item => item.projectName === projectName)
 
         if(!projectInfo.length) {
