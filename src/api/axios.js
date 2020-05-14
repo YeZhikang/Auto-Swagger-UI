@@ -3,11 +3,17 @@ import qs from 'qs';
 import {message} from "antd";
 const tips = message
 
-axios.defaults.timeout = 10 * 1000;
-axios.defaults.baseURL = 'http://127.0.0.1:3020/'
-axios.defaults.headers['content-type'] = 'application/json'
+const server = axios.create({
+    timeout: 10*1000,
+    baseURL: 'http://127.0.0.1:3020',
+    headers: {
+        'content-type': 'application/json'
+    }
+})
+
+
 // http request 拦截器
-axios.interceptors.request.use(
+server.interceptors.request.use(
     config => {
         // 统一请求头设置
         if (
@@ -30,7 +36,7 @@ axios.interceptors.request.use(
 );
 
 // http response 拦截器
-axios.interceptors.response.use(
+server.interceptors.response.use(
     response => {
         return response.data;
     },
@@ -66,4 +72,6 @@ axios.interceptors.response.use(
     }
 );
 
-export default axios
+
+
+export default server

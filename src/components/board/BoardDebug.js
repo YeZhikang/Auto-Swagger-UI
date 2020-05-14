@@ -1,9 +1,9 @@
 import React,{createRef} from "react";
 import { Radio } from "antd";
 import ParamsSelectorTable from "./ParamsSelectorTable";
-import axios from 'axios'
 import JSONEditor from 'jsoneditor'
 import 'jsoneditor/dist/jsoneditor.css'
+import debugRequest from "../../api/debugRequest";
 
 
 const contentTypeOptions = [
@@ -49,7 +49,8 @@ export default class BoardDebug extends React.Component {
         selectedRows.forEach(item => {
             data[item.name] = item.value
         })
-        const res = await axios[this.props.currentApiInfo.method.toLowerCase()](this.props.currentApiInfo.url, data)
+        const res = await debugRequest[this.props.currentApiInfo.method.toLowerCase()](this.props.currentApiInfo.url, data)
+        console.log(res)
         this.state.editor.set(res)
     }
 
@@ -57,7 +58,7 @@ export default class BoardDebug extends React.Component {
         return (
             <div>
                 <div className="information--unit">
-                    <span className={ 'board-debug__body__method' }>{ this.props.currentApiInfo.method }</span>
+                    <span className={ `board-debug__body__method board-document__body__method--${this.props.currentApiInfo.method}` }>{ this.props.currentApiInfo.method.toUpperCase() }</span>
                     <input
                         className={ 'board-debug__body__method--input' }
                         value={ this.props.currentApiInfo.url }
