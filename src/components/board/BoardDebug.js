@@ -16,7 +16,9 @@ export default class BoardDebug extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editor: null
+            editor: null,
+            contentType: contentTypeOptions[0].value,
+            isSend: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.tableRef = createRef()
@@ -28,10 +30,6 @@ export default class BoardDebug extends React.Component {
         const element = document.querySelector('.editor-holder');
         const options = {
             mode: 'code',
-            history: true,
-            onChange: this.onChange,
-            onValidationError: this.onError,
-            contentType: contentTypeOptions[0].value
         };
         console.log(this.props.currentApiInfo.params)
         const editor = new JSONEditor(element, options);
@@ -49,14 +47,19 @@ export default class BoardDebug extends React.Component {
     }
 
     async handleSubmit() {
-        const selectedRows = this.tableRef.current.getAllValues()
-        const url = this.inputRef.current.value
-        const data = {}
-        selectedRows.forEach(item => {
-            data[item.name] = item.value
+        this.setState({
+            isSend: true
         })
-        const res = await BoardDebug.getCurrentRequest(url, this.props.currentApiInfo.method.toLowerCase(), data, this.state.contentType)
-        this.state.editor.set(res)
+        setTimeout(async () => {
+            const selectedRows = this.tableRef.current.getAllValues()
+            const url = this.inputRef.current.value
+            const data = {}
+            selectedRows.forEach(item => {
+                data[item.name] = item.value
+            })
+            const res = await BoardDebug.getCurrentRequest(url, this.props.currentApiInfo.method.toLowerCase(), data, this.state.contentType)
+            this.state.editor.set(res)
+        }, 0)
     }
 
     static getCurrentRequest(url, method, data, contentType) {
@@ -133,8 +136,8 @@ export default class BoardDebug extends React.Component {
                 </div>
                 <div className="information--unit">
                     <Radio.Group
-                        defaultValue={ this.state.contentType }
-                        onChange={ BoardDebug.handleChangeValue }
+                        value={ this.state.contentType }
+                        onChange={ this.handleChangeValue }
                         options={ contentTypeOptions }
                     />
                 </div>
@@ -144,10 +147,13 @@ export default class BoardDebug extends React.Component {
                         dataSource={ this.props.currentApiInfo.params }
                     />
                 </div>
-                <div
-                    style={ { 'height': '300px' } }
-                    className={ 'editor-holder' }
-                />
+                {
+                    this.state.isSend ?
+                    <div
+                        style={ { 'height': '300px' } }
+                        className={ 'editor-holder' }
+                    />  : null
+                }
             </div>
         );
     }
