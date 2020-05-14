@@ -24,7 +24,10 @@ export default function BoardDocument(props) {
             title: '是否必须',
             dataIndex: 'isNecessary',
             key: 'isNecessary',
-            render: (text) => text ? <h4 className={'param-title'} style={{ 'color': '#ffba00' }}>{ text.toString() } </h4> : <span>{ text.toString() }</span>
+            render: (text) => text ? <h4
+                className={ 'param-title' }
+                style={ { 'color': '#ffba00' } }
+            >{ text.toString() } </h4> : <span>{ text.toString() }</span>
         },
         {
             title: '类型',
@@ -90,12 +93,10 @@ export default function BoardDocument(props) {
     // }
 
     useEffect(() => {
-        if(props.currentApiInfo.responseExample){
+        if (props.currentApiInfo.responseExample) {
             hljs.highlightBlock(document.querySelector('.example-code'))
         }
     })
-
-
 
 
     return (
@@ -106,7 +107,12 @@ export default function BoardDocument(props) {
             <div className={ 'board-document__body' }>
                 <div className="information--unit">
                     <h4>
-                        <span className={ 'board-document__body--title' }>请求地址</span><span className={ 'board-document__body__method' }>{ props.currentApiInfo.method }</span>
+                        <span className={ 'board-document__body--title' }>
+                            请求地址
+                        </span>
+                        <span className={ `board-document__body__method board-document__body__method--${props.currentApiInfo.method}`}>
+                            { props.currentApiInfo.method.toUpperCase() }
+                        </span>
                         <span className={ 'board-document__body__url' }>{ props.currentApiInfo.url }</span>
                     </h4>
                 </div>
@@ -152,10 +158,10 @@ export default function BoardDocument(props) {
                     </h4>
                     {
                         props.currentApiInfo.responseExample ?
-                        <pre className={ 'example-code' }>
+                            <pre className={ 'example-code' }>
                             { props.currentApiInfo.responseExample }
                         </pre>
-                            : <div className={'mt15'}>暂无数据</div>
+                            : <div className={ 'mt15' }>暂无数据</div>
                     }
                 </div>
             </div>

@@ -104,12 +104,29 @@
 
 .board-document__body__method{
     padding: 2px 4px;
-    background-color: #c12127;
     color: white;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     display: inline-block;
 }
+
+.board-document__body__method--delete{
+    background-color: #c12127;
+}
+
+.board-document__body__method--get{
+    background-color: #00b2f8;
+}
+
+.board-document__body__method--post{
+    background-color: #00d38d;
+}
+
+.board-document__body__method--put{
+    background-color: cornflowerblue;
+}
+
+
 
 .board-debug__body__method{
     padding: 4px 6px;
