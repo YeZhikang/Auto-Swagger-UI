@@ -67,6 +67,7 @@ export default class BoardDebug extends React.Component {
                         onClick={ this.handleSubmit }
                         className={ 'board-debug__body__method--right' }
                     >发 送
+
                     </div>
                 </div>
                 <div className="information--unit">
