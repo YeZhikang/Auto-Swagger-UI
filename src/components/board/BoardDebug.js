@@ -1,4 +1,4 @@
-import React,{createRef} from "react";
+import React, { createRef } from "react";
 import { Radio } from "antd";
 import ParamsSelectorTable from "./ParamsSelectorTable";
 import JSONEditor from 'jsoneditor'
@@ -20,6 +20,8 @@ export default class BoardDebug extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.tableRef = createRef()
+        this.inputRef = createRef()
+        this.handleChangeValue = this.handleChangeValue.bind(this)
     }
 
     componentDidMount() {
@@ -28,7 +30,8 @@ export default class BoardDebug extends React.Component {
             mode: 'code',
             history: true,
             onChange: this.onChange,
-            onValidationError: this.onError
+            onValidationError: this.onError,
+            contentType: contentTypeOptions[0].value
         };
         console.log(this.props.currentApiInfo.params)
         const editor = new JSONEditor(element, options);
@@ -38,30 +41,88 @@ export default class BoardDebug extends React.Component {
     }
 
 
-    handleChangeValue() {
-
+    handleChangeValue(val) {
+        console.log(val.target.value)
+        this.setState({
+            contentType: val.target.value
+        })
     }
 
     async handleSubmit() {
         const selectedRows = this.tableRef.current.getAllValues()
-
+        const url = this.inputRef.current.value
         const data = {}
         selectedRows.forEach(item => {
             data[item.name] = item.value
         })
-        const res = await debugRequest[this.props.currentApiInfo.method.toLowerCase()](this.props.currentApiInfo.url, data)
-        console.log(res)
+        const res = await BoardDebug.getCurrentRequest(url, this.props.currentApiInfo.method.toLowerCase(), data, this.state.contentType)
         this.state.editor.set(res)
+    }
+
+    static getCurrentRequest(url, method, data, contentType) {
+        if (contentType === 'form-data') {
+            const formData = new FormData();
+            for (let item in data) {
+                if (data.hasOwnProperty(item)) {
+                    formData.append(item, data[item])
+                }
+            }
+            data = formData
+        }
+        switch (method) {
+            case 'get':
+                return debugRequest.get(url, {
+                    params: {
+                        ...data
+                    },
+                    headers: {
+                        'content-type': contentType
+                    }
+                })
+            case 'post':
+                return debugRequest.post(url, data, {
+                    headers: {
+                        'content-type': contentType
+                    }
+                })
+            case 'put':
+                return debugRequest.put(url, data, {
+                    headers: {
+                        'content-type': contentType
+                    }
+                })
+            case 'delete':
+                return debugRequest.delete(url, {
+                    params: {
+                        ...data
+                    },
+                    headers: {
+                        'content-type': contentType
+                    }
+                })
+            case 'head':
+                return debugRequest.head(url, {
+                    params: {
+                        ...data
+                    },
+                    headers: {
+                        'content-type': contentType
+                    }
+                })
+            default:
+                throw 'error! not match any method!'
+        }
     }
 
     render() {
         return (
             <div>
                 <div className="information--unit">
-                    <span className={ `board-debug__body__method board-document__body__method--${this.props.currentApiInfo.method}` }>{ this.props.currentApiInfo.method.toUpperCase() }</span>
+                    <span className={ `board-debug__body__method board-document__body__method--${ this.props.currentApiInfo.method }` }>{ this.props.currentApiInfo.method.toUpperCase() }</span>
                     <input
+                        ref={ this.inputRef }
                         className={ 'board-debug__body__method--input' }
-                        value={ this.props.currentApiInfo.url }
+                        defaultValue={ this.props.currentApiInfo.url }
                     />
                     <div
                         onClick={ this.handleSubmit }
@@ -72,15 +133,21 @@ export default class BoardDebug extends React.Component {
                 </div>
                 <div className="information--unit">
                     <Radio.Group
-                        defaultValue={ contentTypeOptions[0].value }
-                        onChange={ this.handleChangeValue }
+                        defaultValue={ this.state.contentType }
+                        onChange={ BoardDebug.handleChangeValue }
                         options={ contentTypeOptions }
                     />
                 </div>
                 <div className="information--unit">
-                    <ParamsSelectorTable ref={this.tableRef} dataSource={ this.props.currentApiInfo.params }/>
+                    <ParamsSelectorTable
+                        ref={ this.tableRef }
+                        dataSource={ this.props.currentApiInfo.params }
+                    />
                 </div>
-                <div className={ 'editor-holder' }/>
+                <div
+                    style={ { 'height': '300px' } }
+                    className={ 'editor-holder' }
+                />
             </div>
         );
     }
