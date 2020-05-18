@@ -78,6 +78,7 @@ export default class BoardMain extends React.Component {
             if (this.state.currentApi !== apiTitle) {
                 this.setState({
                     currentApi: apiTitle,
+                    project: project
                 })
                 this.getApiInfo(project, apiTitle)
             }
@@ -110,12 +111,14 @@ export default class BoardMain extends React.Component {
                                 ...this.state.currentApiInfo,
                                 responseStatus: this.state.responseStatus
                             } }
+                            project={this.state.project}
                         /> :
                         <BoardDebug
                             currentApiInfo={ {
                                 ...this.state.currentApiInfo,
                                 responseStatus: this.state.responseStatus
                             } }
+                            project={this.state.project}
                         />
                 }
             </div>

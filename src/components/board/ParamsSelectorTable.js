@@ -52,9 +52,9 @@ export default class ParamsSelectorTable extends React.Component {
     };
 
     render() {
-        const dataSource = this.props.dataSource.map((item,index) => {
+        const dataSource = [...this.props.dataSource.map((item,index) => {
             return {...item, key:index}
-        })
+        })]
 
         return (
             <>

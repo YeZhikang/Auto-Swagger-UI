@@ -6,7 +6,7 @@ const debugRequest = axios.create({
 
 debugRequest.interceptors.response.use(
     response => {
-        return response.data;
+        return response;
     },
     error => {
         // 统一错误处理

@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import hljs from "highlight.js";
 import { Table } from "antd";
+import JSONEditor from 'jsoneditor'
+import 'jsoneditor/dist/jsoneditor.css'
 
 export default function BoardDocument(props) {
     const paramsColumns = [
@@ -27,7 +29,7 @@ export default function BoardDocument(props) {
             render: (text) => text ? <h4
                 className={ 'param-title' }
                 style={ { 'color': '#ffba00' } }
-            >{ text.toString() } </h4> : <span>{ text.toString() }</span>
+            >{ text.toString() } </h4> : <span>{ text !== undefined ? text.toString() : 'null' }</span>
         },
         {
             title: '类型',
@@ -92,12 +94,35 @@ export default function BoardDocument(props) {
     //     });
     // }
 
-    useEffect(() => {
-        if (props.currentApiInfo.responseExample) {
-            hljs.highlightBlock(document.querySelector('.example-code'))
-        }
-    })
+    const [editor, setEditor] = useState(null)
 
+
+
+    useEffect(() => {
+
+        let newEditor
+        if (!editor) {
+            const element = document.querySelector('.editor');
+            const options = {
+                mode: 'code',
+            };
+            newEditor = new JSONEditor(element, options)
+            newEditor.set({name: 3})
+            setEditor(newEditor)
+        } else {
+            editor.set({})
+        }
+        // editor.set(2)
+
+        if (props.currentApiInfo.exampleRes) {
+            console.log(props.currentApiInfo)
+            if(newEditor && !editor){
+                newEditor.set(props.currentApiInfo.exampleRes)
+            }else{
+                editor.set(props.currentApiInfo.exampleRes)
+            }
+        }
+    }, [props.currentApiInfo.exampleRes])
 
     return (
         <>
@@ -110,7 +135,7 @@ export default function BoardDocument(props) {
                         <span className={ 'board-document__body--title' }>
                             请求地址
                         </span>
-                        <span className={ `board-document__body__method board-document__body__method--${props.currentApiInfo.method}`}>
+                        <span className={ `board-document__body__method board-document__body__method--${ props.currentApiInfo.method }` }>
                             { props.currentApiInfo.method.toUpperCase() }
                         </span>
                         <span className={ 'board-document__body__url' }>{ props.currentApiInfo.url }</span>
@@ -156,13 +181,7 @@ export default function BoardDocument(props) {
                     <h4>
                         <span className={ 'board-document__body--title' }>返回示例</span>
                     </h4>
-                    {
-                        props.currentApiInfo.responseExample ?
-                            <pre className={ 'example-code' }>
-                            { props.currentApiInfo.responseExample }
-                        </pre>
-                            : <div className={ 'mt15' }>暂无数据</div>
-                    }
+                    <div className={ 'editor' }></div>
                 </div>
             </div>
         </>

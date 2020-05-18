@@ -67,10 +67,10 @@
 }
 
 .single-tabs__tab--active{
-    border-right: 1px solid white;
-    border-left: 1px solid lightgray;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+    border-right: 2px solid white;
+    border-left: 2px dashed lightgray;
+    border-top: 2px dashed lightgray;
+    border-bottom: 2px dashed lightgray;
     font-weight: 600;
     color: #FA541C;
 }
@@ -79,7 +79,7 @@
     padding-top: 10px;
     width: 60px;
     height: 600px;
-    border-right: 1px solid lightgray;
+    border-right: 2px dashed lightgray;
 }
 
 .board-tab{
