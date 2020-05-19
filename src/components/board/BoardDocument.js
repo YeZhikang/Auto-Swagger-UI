@@ -99,7 +99,6 @@ export default function BoardDocument(props) {
 
 
     useEffect(() => {
-
         let newEditor
         if (!editor) {
             const element = document.querySelector('.editor');
@@ -107,7 +106,7 @@ export default function BoardDocument(props) {
                 mode: 'code',
             };
             newEditor = new JSONEditor(element, options)
-            newEditor.set({name: 3})
+            // 这里将开启新一轮的 useEffect
             setEditor(newEditor)
         } else {
             editor.set({})

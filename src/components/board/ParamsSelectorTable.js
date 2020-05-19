@@ -17,7 +17,7 @@ const paramsColumns = [
         title: '参数值',
         dataIndex: 'data',
         key: 'data',
-        render: (text, record) => <Input className={'input-area'} placeholder={record.description}/>
+        render: (text, record) => <Input key={record.randomKey} className={'input-area'} placeholder={record.description}/>
     }
 ]
 
@@ -53,8 +53,10 @@ export default class ParamsSelectorTable extends React.Component {
 
     render() {
         const dataSource = [...this.props.dataSource.map((item,index) => {
-            return {...item, key:index}
+            return {...item, key:index, randomKey: Date.now() + Math.floor(Math.random()*10000)}
         })]
+
+        console.log(this.props)
 
         return (
             <>

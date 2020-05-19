@@ -156,6 +156,7 @@ export default class BoardDebug extends React.Component {
                     <ParamsSelectorTable
                         ref={ this.tableRef }
                         dataSource={ this.props.currentApiInfo.params }
+
                     />
                 </div>
                 {
