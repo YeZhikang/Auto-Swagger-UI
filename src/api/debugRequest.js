@@ -37,7 +37,7 @@ debugRequest.interceptors.response.use(
         // } else {
         //     return Promise.reject(detail ? detail.slice(0, 50) : '');
         // }
-        return error.response.data
+        return error.response
     }
 );
 

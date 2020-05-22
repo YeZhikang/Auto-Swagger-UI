@@ -4,11 +4,14 @@ import { Button, Select, } from 'antd'
 import Input from "antd/lib/input";
 import { SearchOutlined } from '@ant-design/icons';
 import APIModal from "../modal/AddAPIModal";
+import Store from '../../store'
+import ExportModal from "../modal/ExportModal";
 
 const { Option } = Select
 
 function Nav(props) {
     const [visible, setVisible] = useState(false)
+    const [exportModalVisible, setExportModalVisible] = useState(false)
 
     function handleChangeCurrent(value) {
         props.changeCurrent(value)
@@ -25,7 +28,14 @@ function Nav(props) {
     function handleOkDialog() {
         setVisible(false)
     }
-    console.log(props.parentNodes)
+
+    function exportApiToFiles() {
+        setExportModalVisible(true)
+    }
+
+    function handleCloseExportModal() {
+        setExportModalVisible(false)
+    }
 
     return (
         <div className={ 'nav fxal fxbt' }>
@@ -40,6 +50,11 @@ function Nav(props) {
             </Select>
 
             <div className={ 'fxal ' }>
+                <Button
+                    onClick={ exportApiToFiles }
+                    type={ 'link' }
+                    style={ { marginRight: '20px' } }
+                >导出接口</Button>
                 <Button
                     onClick={ handleOpenDialog }
                     type={ 'link' }
@@ -58,7 +73,12 @@ function Nav(props) {
                 apiMenu={ props.parentNodes }
                 projectList={ props.projectList }
                 visible={ visible }
-                projectInfo = {props.projectInfo}
+                projectInfo={ props.projectInfo }
+            />
+
+            <ExportModal
+                visible={ exportModalVisible }
+                handleClose={ handleCloseExportModal }
             />
         </div>
     )

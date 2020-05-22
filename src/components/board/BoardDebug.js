@@ -123,6 +123,7 @@ export default class BoardDebug extends React.Component {
                     projectId: this.props.project.projectId
                 })
             }
+
             this.state.editor.set(res.data)
         }, 0)
     }
@@ -156,7 +157,7 @@ export default class BoardDebug extends React.Component {
                     <ParamsSelectorTable
                         ref={ this.tableRef }
                         dataSource={ this.props.currentApiInfo.params }
-
+                        renderKey={ this.props.currentApiInfo.method + this.props.currentApiInfo.url }
                     />
                 </div>
                 {

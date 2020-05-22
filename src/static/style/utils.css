@@ -54,4 +54,19 @@
     border-color: #389e0d;
 }
 
+.board-document__body__method--delete{
+    background-color: #c12127;
+}
+
+.board-document__body__method--get{
+    background-color: #00b2f8;
+}
+
+.board-document__body__method--post{
+    background-color: #00d38d;
+}
+
+.board-document__body__method--put{
+    background-color: cornflowerblue;
+}
 

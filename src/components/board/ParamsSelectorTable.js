@@ -53,10 +53,10 @@ export default class ParamsSelectorTable extends React.Component {
 
     render() {
         const dataSource = [...this.props.dataSource.map((item,index) => {
-            return {...item, key:index, randomKey: Date.now() + Math.floor(Math.random()*10000)}
+            return {...item, key:index, randomKey: `${this.props.renderKey}-${index}`}
         })]
 
-        console.log(this.props)
+        console.log(dataSource)
 
         return (
             <>
