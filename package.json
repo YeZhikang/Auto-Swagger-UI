@@ -12,7 +12,7 @@
     "axios": "^0.19.2",
     "highlight.js": "^10.0.1",
     "json-editor": "^0.7.28",
-    "jsoneditor": "^8.6.8",
+    "jsoneditor": "^9.5.6",
     "node-sass": "^4.14.0",
     "qs": "^6.9.4",
     "react": "^16.13.1",
